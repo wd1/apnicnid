@@ -1,0 +1,43 @@
+version: "2"
+services:
+  apnic-mongo:
+    image: apnic-mongo
+    container_name: apnic-mongo
+    networks:
+      - apnic
+    ports:
+      - "33317:27017"
+    build:
+      context: ./docs/database
+  apnic-api:
+    image: apnic-api
+    container_name: apnic-api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - apnic-mongo
+    networks:
+      - apnic
+    build:
+      context: ./api
+    environment:
+      - NODE_ENV=production
+      - API_PORT=3000
+      - MONGO_HOST=apnic-mongo
+      - MONGO_PORT=27017
+  apnic-charts:
+    image: apnic-charts
+    container_name: apnic-charts
+    ports:
+      - "8080:80"
+    depends_on:
+      - apnic-api
+    networks:
+      - apnic
+    build:
+      context: ./charts
+    environment:
+      - NODE_ENV=production
+      - API_STATS=localhost:3000
+networks:
+  apnic:

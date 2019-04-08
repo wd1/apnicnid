@@ -1,0 +1,19 @@
+To get 2016 total for asn
+
+[2:12] 
+1) get delegated-apnic-extended-20161231.txt file (edited)
+
+[2:12] 
+get data from that -- not sure what the equivelant of that in the mongo db is or a way to calculate it
+
+[2:13] 
+2) Run the following on this file/data
+
+[2:15] 
+SUM (allocation_length) WHERE allocation_type ="ASN" AND date =2016 AND Status = 'assigned' or 'allocated' (edited)
+
+[2:16] 
+this should give a total of all
+
+[2:17] 
+3) To get per economy run similar to this over the data: But add in am economy filter
